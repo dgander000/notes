@@ -1,0 +1,190 @@
+/* Colored folders for Bookmarks Menus, Bookmarks Sidebar, Bookmarks Toolbar, Library window, Add/Edit Bookmarks dialog
+   Original: https://www.userchrome.org/samples/userChrome-color_bookmark_folders_20171219.css
+   Updated for Firefox 60: https://www.userchrome.org/samples/userChrome-color_bookmark_folders_20180510.css
+   Uses mods for Firefox 62 from cor-el's Sept. 15, 2018 post:
+   https://support.mozilla.org/questions/1232447#answer-1151074
+*/
+
+/* Standard folder -- on Toolbar and Menus */
+#PlacesToolbarItems toolbarbutton[container="true"] .toolbarbutton-icon,
+:-moz-any(
+#PlacesToolbarItems,
+#PlacesChevronPopup,
+#BMB_bookmarksPopup,
+#bookmarksMenu) menu[container="true"] > .menu-iconic-left > .menu-iconic-icon,
+/* Standard folder -- in Sidebar, Library, Add/Edit Bookmark dialog */
+:-moz-any(
+#bookmarks-view, 
+#editBMPanel_folderTree, 
+#placesList, 
+#placeContent) treechildren::-moz-tree-image(container),
+#editBMPanel_folderMenuList > .menulist-label-box > .menulist-icon,
+#editBMPanel_folderMenuList menupopup menuitem {
+  fill: #e8bb00 !important; /* slightly muted gold */
+}
+
+/* Live Bookmark -- on Toolbar and Menus */
+#PlacesToolbarItems toolbarbutton[container="true"][livemark="true"] .toolbarbutton-icon,
+:-moz-any(
+#PlacesToolbarItems,
+#PlacesChevronPopup,
+#BMB_bookmarksPopup,
+#bookmarksMenu) menu[container="true"][livemark="true"] > .menu-iconic-left > .menu-iconic-icon,
+/* Live Bookmark -- in Sidebar, Library, Add/Edit Bookmark dialog */
+:-moz-any(
+#bookmarks-view, 
+#editBMPanel_folderTree, 
+#placesList, 
+#placeContent) treechildren::-moz-tree-image(container, livemark) {
+  fill: orange !important;
+}
+
+/* Smart bookmark folder -- on Toolbar and Menus */
+#PlacesToolbarItems toolbarbutton[container="true"][query="true"] .toolbarbutton-icon,
+:-moz-any(
+#PlacesToolbarItems,
+#PlacesChevronPopup,
+#BMB_bookmarksPopup,
+#bookmarksMenu) menu[container="true"][query="true"] > .menu-iconic-left > .menu-iconic-icon,
+/* Smart bookmark folder -- in Sidebar, Library, Add/Edit Bookmark dialog */
+:-moz-any(
+#bookmarks-view, 
+#editBMPanel_folderTree, 
+#placesList, 
+#placeContent) treechildren::-moz-tree-image(container, query) {
+  fill: #69c !important; /* similar to blue smart folder color */
+}
+
+/*** Top-level "container" icons (otherwise would be Standard folder color) ***/
+/* Bookmarks Menu -- in Sidebar, Library, Add/Edit Bookmark dialog */
+:-moz-any(
+#bookmarks-view, 
+#editBMPanel_folderTree, 
+#placesList, 
+#placeContent) treechildren::-moz-tree-image(container, OrganizerQuery_BookmarksMenu),
+:-moz-any(
+#bookmarks-view, 
+#editBMPanel_folderTree, 
+#placesList, 
+#placeContent) treechildren::-moz-tree-image(container, queryFolder_menu________),
+#editBMPanel_bmRootItem > .menu-iconic-left, 
+#editBMPanel_folderMenuList[selectedIndex="1"] > .menulist-label-box > .menulist-icon {
+  fill: olive !important;
+}
+
+/* Bookmarks Toolbar -- on Menus */
+#BMB_bookmarksPopup #BMB_bookmarksToolbar > .menu-iconic-left > .menu-iconic-icon,
+#bookmarksMenuPopup #bookmarksToolbarFolderMenu  > .menu-iconic-left > .menu-iconic-icon,
+/* Bookmarks Toolbar -- in Sidebar, Library, Add/Edit Bookmark dialog */
+:-moz-any(
+#bookmarks-view, 
+#editBMPanel_folderTree, 
+#placesList, 
+#placeContent) treechildren::-moz-tree-image(container, OrganizerQuery_BookmarksToolbar),
+:-moz-any(
+#bookmarks-view, 
+#editBMPanel_folderTree, 
+#placesList, 
+#placeContent) treechildren::-moz-tree-image(container, queryFolder_toolbar_____),
+#editBMPanel_toolbarFolderItem > .menu-iconic-left, 
+#editBMPanel_folderMenuList[selectedIndex="0"] > .menulist-label-box > .menulist-icon {
+  fill: olive !important;
+}
+
+/* Other Bookmarks -- on Menus */
+#BMB_bookmarksPopup #BMB_unsortedBookmarks > .menu-iconic-left > .menu-iconic-icon,
+#bookmarksMenuPopup #menu_unsortedBookmarks  > .menu-iconic-left > .menu-iconic-icon,
+/* Other Bookmarks -- in Sidebar, Library, Add/Edit Bookmark dialog */
+:-moz-any(
+#bookmarks-view, 
+#editBMPanel_folderTree, 
+#placesList, 
+#placeContent) treechildren::-moz-tree-image(container, OrganizerQuery_UnfiledBookmarks),
+:-moz-any(
+#bookmarks-view, 
+#editBMPanel_folderTree, 
+#placesList, 
+#placeContent) treechildren::-moz-tree-image(container, queryFolder_unfiled_____),
+#editBMPanel_unfiledRootItem > .menu-iconic-left, 
+#editBMPanel_folderMenuList[selectedIndex="2"] > .menulist-label-box > .menulist-icon {
+  fill: olive !important;
+}
+
+/* (Older Firefox) Avoid overriding classic Bookmarks Toolbar and Other Bookmarks icons in menus */
+#BMB_bookmarksPopup #BMB_bookmarksToolbar.menu-iconic-icon, 
+#bookmarksMenu #bookmarksToolbarFolderMenu.menu-iconic-icon {
+  list-style-image: url("chrome://browser/skin/places/bookmarksToolbar.png") !important;
+}
+#BMB_bookmarksPopup #BMB_unsortedBookmarks.menu-iconic-icon, 
+#bookmarksMenu #menu_unsortedBookmarks.menu-iconic-icon {
+  list-style-image: url("chrome://browser/skin/places/unsortedBookmarks.png") !important;
+}
+
+.bookmark-item[label="A"] image {
+width:0!important;
+height:0!important;
+padding: 0 0 16px 16px !important;
+background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADLSURBVDhP1dAxDgFBGEDhIRK9RKFR6NAoHACdQhyAUIoTSIQodZRqnYYDcADRqjTiBBQqjfD+3VmZsRO0XvJlZ3Z2dier/q4s5jgjIzd+rYgV7nhoM3ythDWCTaYbUggVQQ1buDaaxrCqYg/Xw++uaMFqCdfDpgtGSMBrgAmaqMC1ybSAVQOyIH84j52eB07ooqzn8hGrGI6QRTlJXY8PaEPWpTTkvlxDdSAnKHgzpXKI+sNXScgL5M/3NDm9Vxx9f/ixITaGKf47pZ72405c34UwLgAAAABJRU5ErkJggg==)!important; 
+}
+
+.bookmark-item[label="B"] image {
+width:0!important;
+height:0!important;
+padding: 0 0 16px 16px !important;
+background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADLSURBVDhP1dAxDgFBGEDhIRK9RKFR6NAoHACdQhyAUIoTSIQodZRqnYYDcADRqjTiBBQqjfD+3VmZsRO0XvJlZ3Z2dier/q4s5jgjIzd+rYgV7nhoM3ythDWCTaYbUggVQQ1buDaaxrCqYg/Xw++uaMFqCdfDpgtGSMBrgAmaqMC1ybSAVQOyIH84j52eB07ooqzn8hGrGI6QRTlJXY8PaEPWpTTkvlxDdSAnKHgzpXKI+sNXScgL5M/3NDm9Vxx9f/ixITaGKf47pZ72405c34UwLgAAAABJRU5ErkJggg==)!important; 
+}
+
+.bookmark-item[label="Send To Trello"] image {
+width:0!important;
+height:0!important;
+padding: 0 0 16px 16px !important;
+background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAA/QAAAP0B4nuDkwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAFKSURBVDiNzY+/S0JhFIafc70pUSAtDUG0WEtTqFtL0BwRTY0NWQQNLa39CUWJV4McqsWWpFqipalBRQiCyB8QQpFR0KANpqdFMlNuRkvPdvjO837nhT8iqIrPyp2J1E5q0ruTCgyUfxNgIKIYeqPIhmjp3h/Kbo5t54c6DwBENF6f3Sq64jCrea+VOfZHbid/rgB4w8kuQ92PCn1tdtIiYpkl197l6uBb2wAAfyhzoMKczU9FIEpVgollT6GpQp14q9ZAoV9hTR2a81uZmDecG7fb75jPCj4rMwscduC8I8RF2EosDF+YX7JmQO3EgkKwohK9WvQUmy4YjV07u1+cRcDdoqmcq6EReD1KBXyV788mgOvZOYE0yWXQfVSs5JInbXeWCWCITIOCcKdKqOZkNz0/8mQnNgJUhUi2R5SpxIPnlHWpdSL+Hz4AVbFx2NicHP8AAAAASUVORK5CYII=)!important; 
+}
+
+.bookmark-item[label="WildML"] image {
+width:0!important;
+height:0!important;
+padding: 0 0 16px 16px !important;
+background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAA/QAAAP0B4nuDkwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAIuSURBVDiNZZNdaM9RGMc/3/PbW5HZBfM2iq3NxUxsZpJcWORCUdyJkvxtF4oLLpWSG5Ra3tqNKBazuSEuWKO85VJhuFlxIYRdzPY/Xxe/n9/+5lydc3qez3mezzlHTB/HHVprRzYEVDMWxx/Mrkr0eyJ02vr6slA/hOTScJUu2s+9m1Us5y5iXbZ1xigRPpQu/biyPG59sq/p59+c8Heyquft8mIFN0qSQSyRvKjkvPXjE0nf6otvmv4BtF/+UJskegTMA27m8ZawSqscNCyWw6MV50fmApQBFCeLBxFzZQ6TMEpUrxX3YFUocDqa6zLGfCEwB9NXHuIB4ERZWpmawVgcJfJZUAXqR6521BHBjqyl+zLzAWStyFsw/MhKXADUGS+XWSdrLDP9zXAM0Qg0Z7AfOUBx8pTFLkxntLqBcsNOQ0eqguEArxU1mOu07k8BlOyV6UOcDHhDmsM35LFUJtsckeWuKcFemUu0qM+2tyC2WF4rQguOH0EFACeqCdCd8mJ1RC05QKjXeDuQAASrwfgihP6pkn3BUJXd7i7H+DRv4UWh/p5FIRN6zWYUM5TCuGrRJbwZuJI9n0+vuhqHc0AqUr8y40sR1QQWpkB3yuwGVQNNaezU68wBM6uSAcQtoB0YwKkXS7VAh+EO0Arc/D7h2/nBTBttl963OcaHwAzEWVsh+0xjgbDxeWHZy9L4/wAAbT0jdQ5xTTKhB5OVQYrFTUmZnj3b3zA6PfYPmg/WGmjjE4sAAAAASUVORK5CYII=)!important; 
+}
+
+
+#home-button
+{
+  fill: goldenrod !important;
+}
+
+#back-button {
+fill: springgreen !important;
+}
+
+#forward-button {
+fill: lime !important;
+}
+
+#reload-button {
+  fill: crimson !important;
+}
+
+#stop-button {
+  fill: crimson !important;
+}
+
+#library-button {
+  fill: Purple !important;
+}
+
+#PanelUI-menu-button {
+  fill: DarkBlue !important;
+}
+
+#downloads-button {
+  fill: FireBrick !important;
+}
+
+
+#sidebar-button {
+  fill: Blue !important;
+  fill-opacity: 1.0 !important;
+  opacity: 1.0 !important;
+}
