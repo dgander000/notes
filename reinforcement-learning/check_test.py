@@ -1,41 +1,89 @@
-import unittest 
+import unittest
+import copy
 from IPython.display import Markdown, display
 import numpy as np
+from frozenlake import FrozenLakeEnv
 
 def printmd(string):
     display(Markdown(string))
 
-V_opt = np.zeros((4,12))
-V_opt[0:13][0] = -np.arange(3, 15)[::-1]
-V_opt[0:13][1] = -np.arange(3, 15)[::-1] + 1
-V_opt[0:13][2] = -np.arange(3, 15)[::-1] + 2
-V_opt[3][0] = -13
+def policy_evaluation_soln(env, policy, gamma=1, theta=1e-8):
+    V = np.zeros(env.nS)
+    while True:
+        delta = 0
+        for s in range(env.nS):
+            Vs = 0
+            for a, action_prob in enumerate(policy[s]):
+                for prob, next_state, reward, done in env.P[s][a]:
+                    Vs += action_prob * prob * (reward + gamma * V[next_state])
+            delta = max(delta, np.abs(V[s]-Vs))
+            V[s] = Vs
+        if delta < theta:
+            break
+    return V
 
-pol_opt = np.hstack((np.ones(11), 2, 0))
+def q_from_v_soln(env, V, s, gamma=1):
+    q = np.zeros(env.nA)
+    for a in range(env.nA):
+        for prob, next_state, reward, done in env.P[s][a]:
+            q[a] += prob * (reward + gamma * V[next_state])
+    return q
 
-V_true = np.zeros((4,12))
-for i in range(3):
-    V_true[0:13][i] = -np.arange(3, 15)[::-1] - i
-V_true[1][11] = -2
-V_true[2][11] = -1
-V_true[3][0] = -17
+def policy_improvement_soln(env, V, gamma=1):
+    policy = np.zeros([env.nS, env.nA]) / env.nA
+    for s in range(env.nS):
+        q = q_from_v_soln(env, V, s, gamma)
+        best_a = np.argwhere(q==np.max(q)).flatten()
+        policy[s] = np.sum([np.eye(env.nA)[i] for i in best_a], axis=0)/len(best_a)
+    return policy
 
-def get_long_path(V):
-    return np.array(np.hstack((V[0:13][0], V[1][0], V[1][11], V[2][0], V[2][11], V[3][0], V[3][11])))
+def policy_iteration_soln(env, gamma=1, theta=1e-8):
+    policy = np.ones([env.nS, env.nA]) / env.nA
+    while True:
+        V = policy_evaluation_soln(env, policy, gamma, theta)
+        new_policy = policy_improvement_soln(env, V)
+        if (new_policy == policy).all():
+            break;
+        policy = copy.copy(new_policy)
+    return policy, V
 
-def get_optimal_path(policy):
-    return np.array(np.hstack((policy[2][:], policy[3][0])))
+env = FrozenLakeEnv()
+random_policy = np.ones([env.nS, env.nA]) / env.nA
 
 class Tests(unittest.TestCase):
 
-    def td_prediction_check(self, V):
-        to_check = get_long_path(V)
-        soln = get_long_path(V_true)
+    def policy_evaluation_check(self, policy_evaluation):
+        soln = policy_evaluation_soln(env, random_policy)
+        to_check = policy_evaluation(env, random_policy)
         np.testing.assert_array_almost_equal(soln, to_check)
 
-    def td_control_check(self, policy):
-        to_check = get_optimal_path(policy)
-        np.testing.assert_equal(pol_opt, to_check)
+    def q_from_v_check(self, q_from_v):
+        V = policy_evaluation_soln(env, random_policy)
+        soln = np.zeros([env.nS, env.nA])
+        to_check = np.zeros([env.nS, env.nA])
+        for s in range(env.nS):
+            soln[s] = q_from_v_soln(env, V, s)
+            to_check[s] = q_from_v(env, V, s)
+        np.testing.assert_array_almost_equal(soln, to_check)
+
+    def policy_improvement_check(self, policy_improvement):
+        V = policy_evaluation_soln(env, random_policy)
+        new_policy = policy_improvement(env, V)
+        new_V = policy_evaluation_soln(env, new_policy)
+        self.assertTrue(np.all(new_V >= V))
+
+    def policy_iteration_check(self, policy_iteration):
+        policy_soln, _ = policy_iteration_soln(env)
+        policy_to_check, _ = policy_iteration(env)
+        soln = policy_evaluation_soln(env, policy_soln)
+        to_check = policy_evaluation_soln(env, policy_to_check)
+        np.testing.assert_array_almost_equal(soln, to_check)
+
+    def truncated_policy_iteration_check(self, truncated_policy_iteration):
+        self.policy_iteration_check(truncated_policy_iteration)
+
+    def value_iteration_check(self, value_iteration):
+        self.policy_iteration_check(value_iteration)
 
 check = Tests()
 
