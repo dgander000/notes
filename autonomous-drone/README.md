@@ -1,7 +1,9 @@
-# autonomous-drone
-Notes and resources for autonomous drones
+# autonomous-drone   
+
+Notes and resources for autonomous drones     
 
 ## Quadrotor Components
+___
 - frame 
 - four propellers
     - tractor - pulls air downward 
@@ -27,7 +29,8 @@ Notes and resources for autonomous drones
     - typically three gyroscopes and three accelerometers
 - battery for power
 
-![topdown view](/images/topdown_view.png)  
+<img src="./images/topdown_view.png" width=400/>   
+
 Attitude Control 
 - Pitch: how much the drone is tilted forward or backward
 - Roll: how much the drone is tilted left or right
@@ -37,12 +40,13 @@ Attitude Control
 - Need to spin each rotor faster or slower to aim the thrust vector in a certain direction
 - Make the drone go faster by increasing the magnitude and angle of the thrust vector
 
-![attitude control](/images/attitude_control_loop.png)  
+<img src="./images/attitude_control_loop.png" width=400/>      
 
-![position control](/images/position_control_loop.png)  
+<img src="./images/position_control_loop.png" width=400/>      
 
 
 ## Planning Problem
+___
 - Search Space
     - Grid representation
 - All possible states
@@ -61,3 +65,34 @@ Attitude Control
 - Breadth-First search - finds shortest path to goal
 - Depth-First search
 - A*
+
+## Representations
+___
+- Geodetic Frame
+    - Altitiude, Longitude (east/west), Latitude (north/south)
+    - r = 0 at origin
+    - Altitude = 0 at surface of the earth
+    - Latitude and Longitude define position on spherical surface
+    - <img src="./images/geodetic_frame.png" width=400/>   
+- ECEF Frame
+    - Earth Centered Earth Fixed
+    - Every point is represented by x,y,z
+    - NED Frame - z points down
+    - <img src="./images/NED_frame.png" width=400/>  
+- Body Frame
+    - Euler angles
+    - Roll, Pitch, Yaw
+    - counter clockwise
+    - <img src="./images/Euler_angles.png" width=400/>  
+    - Gimbal Lock
+    - order matters
+    - roll, pitch, yaw
+    - <img src="./images/gimbal_lock.png" width=200/> 
+    - Rotation Matrices
+    - <img src="./images/rotation_matrices.png" width=600/> 
+    - Quanternion
+    - <img src="./images/Quanternion.png" width=600/>
+- Configuration Space
+    - Dimensionality = degrees of freedom
+    - Drone typically has 6 - (x, y, z) and (roll, pitch, yaw)
+    
