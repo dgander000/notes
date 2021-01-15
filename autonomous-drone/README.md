@@ -42,3 +42,22 @@ Attitude Control
 ![position control](/images/position_control_loop.png)  
 
 
+## Planning Problem
+- Search Space
+    - Grid representation
+- All possible states
+- Start state
+- Goal state
+- Actions
+- Cost
+    - G = cost function
+    - H = Heuristic function - underestimate of remaining cost 
+    - F = G + H (estimate of total cost)
+    - Triangle inequality theorem
+    - Admissable and Consistent
+    - 
+- Plan is a sequence of state from start state to goal state
+- Partial plan
+- Breadth-First search - finds shortest path to goal
+- Depth-First search
+- A*
