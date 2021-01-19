@@ -96,3 +96,20 @@ ___
     - Dimensionality = degrees of freedom
     - Drone typically has 6 - (x, y, z) and (roll, pitch, yaw)
     
+## Grids to Graphs
+---
+- Create series of waypoints
+- Test for collinearity to remove intermediate points in straight line (only keep start and end points)
+- If 3 points are collinear area of triangle is 0
+- Determinant of the matrix is 0
+- Steps
+    - Discretize world
+    - Search from start to goal
+    - Test for collinearity and remove cells
+- Ray Tracing
+- Bresenham's Algorithm
+- Graph
+    - Nodes
+    - Edges
+- Medial Axis Skeletonization
+- Deadbands
