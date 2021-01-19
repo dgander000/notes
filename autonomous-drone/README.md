@@ -65,6 +65,12 @@ ___
 - Breadth-First search - finds shortest path to goal
 - Depth-First search
 - A*
+- To solve planning problem you need
+    - State Space
+        - Need to represent geometry of world and configuration space
+    - Action Space
+    - Cost Function
+    - Start and Goal State
 
 ## Representations
 ___
@@ -113,3 +119,18 @@ ___
     - Edges
 - Medial Axis Skeletonization
 - Deadbands
+
+## 3D
+---
+- 3D Cell - Voxel - Volume Element
+- 2D Cell - Pixel - Picture Element
+- Voxel Map
+- Random Sampling
+- Probabilistic Roadmap
+    - Sample states at random
+    - Discard states that collide with obstacles
+    - Build a graph and run search
+- Receding Horizon
+    - create rough 2D global plan
+        - Run breadth first search backwards
+    - construct more detailed local plan out to some fixed horizon
