@@ -65,6 +65,12 @@ ___
 - Breadth-First search - finds shortest path to goal
 - Depth-First search
 - A*
+- To solve planning problem you need
+    - State Space
+        - Need to represent geometry of world and configuration space
+    - Action Space
+    - Cost Function
+    - Start and Goal State
 
 ## Representations
 ___
@@ -96,3 +102,35 @@ ___
     - Dimensionality = degrees of freedom
     - Drone typically has 6 - (x, y, z) and (roll, pitch, yaw)
     
+## Grids to Graphs
+---
+- Create series of waypoints
+- Test for collinearity to remove intermediate points in straight line (only keep start and end points)
+- If 3 points are collinear area of triangle is 0
+- Determinant of the matrix is 0
+- Steps
+    - Discretize world
+    - Search from start to goal
+    - Test for collinearity and remove cells
+- Ray Tracing
+- Bresenham's Algorithm
+- Graph
+    - Nodes
+    - Edges
+- Medial Axis Skeletonization
+- Deadbands
+
+## 3D
+---
+- 3D Cell - Voxel - Volume Element
+- 2D Cell - Pixel - Picture Element
+- Voxel Map
+- Random Sampling
+- Probabilistic Roadmap
+    - Sample states at random
+    - Discard states that collide with obstacles
+    - Build a graph and run search
+- Receding Horizon
+    - create rough 2D global plan
+        - Run breadth first search backwards
+    - construct more detailed local plan out to some fixed horizon
